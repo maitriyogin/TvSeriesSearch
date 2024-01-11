@@ -1,19 +1,9 @@
 import React, {useContext, useMemo, useReducer} from 'react';
-import {
-  ShowGenreEnum,
-  ShowStatusEnum,
-  ShowTypeEnum,
-  SortEnum,
-} from '../models/show-enums.ts';
 import {ShowsInput} from '../models/shows.ts';
+import {isEmpty} from '../utils/utils.ts';
 
 export interface FilterContextHandlers {
-  updateQ: (val: string) => void;
-  setPage: (val: number) => void;
-  setShowStatus: (val: ShowStatusEnum) => void;
-  setShowType: (val: ShowTypeEnum) => void;
-  setGenre: (val: ShowGenreEnum) => void;
-  setSort: (val: SortEnum) => void;
+  incPage: () => void;
   updateFilterState: (_state: ShowsInput) => void;
 }
 
@@ -23,12 +13,7 @@ export interface FilterContextProps {
 }
 export const FilterContext = React.createContext<FilterContextProps>({
   handlers: {
-    updateQ: (_q: string) => {},
-    setPage: (_page: number) => {},
-    setShowStatus: (_showStatus_enum: ShowStatusEnum) => {},
-    setShowType: (_showType_enum: ShowTypeEnum) => {},
-    setGenre: (_genre: ShowGenreEnum) => {},
-    setSort: (_sort: SortEnum) => {},
+    incPage: () => {},
     updateFilterState: (_state: ShowsInput) => {},
   },
   state: {},
@@ -46,17 +31,18 @@ export const FilterProvider = ({children}: React.PropsWithChildren) => {
   });
   const handlers = useMemo(
     () => ({
-      updateQ: (q: string) => updateFilterState({q}),
-      setPage: (page: number) => updateFilterState({page}),
-      setShowStatus: (showStatus_enum: ShowStatusEnum) =>
-        updateFilterState({showStatus_enum}),
-      setShowType: (showType_enum: ShowTypeEnum) =>
-        updateFilterState({showType_enum}),
-      setGenre: (genre: ShowGenreEnum) => updateFilterState({genre}),
-      setSort: (sort: SortEnum) => updateFilterState({sort}),
-      updateFilterState: (state: ShowsInput) => updateFilterState({...state}),
+      incPage: () => updateFilterState({page: (state.page ?? 0) + 1}),
+      updateFilterState: (_state: ShowsInput) => {
+        return updateFilterState({
+          ..._state,
+          ...(isEmpty(_state.q) && (_state.page === 1 || !state.page)
+            ? {q: undefined, page: 1}
+            : {}),
+          ...(!isEmpty(_state.q) ? {page: undefined} : {}),
+        });
+      },
     }),
-    [],
+    [state.page],
   );
   const filterState = useMemo(() => ({state, handlers}), [state, handlers]);
   return (

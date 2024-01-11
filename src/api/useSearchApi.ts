@@ -1,25 +1,50 @@
-import {useEffect, useState} from 'react';
-import {ShowsInput, ShowWithScore} from '../models/shows.ts';
-import {searchShows} from './search-shows.ts';
+import {useEffect} from 'react';
+import {useAppState} from '../state/app-context.tsx';
+import {useFilterState} from '../state/filter-context.tsx';
+import {usePrevious} from '../utils/hook-utils.tsx';
+import {isEmpty} from '../utils/utils.ts';
+import {pageShows, searchShows} from './search-shows.ts';
 
-interface SearchApiProps {
-  showsInput: ShowsInput;
-}
-
-export const useSearchApi = ({showsInput}: SearchApiProps) => {
-  const [shows, setShows] = useState<ShowWithScore[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>();
-  const [url, setUrl] = useState<string>('');
+export const useSearchApiContainer = () => {
+  useSearchApi(pageShows, searchShows);
+};
+export const useSearchApi = (
+  _pageShows: typeof pageShows,
+  _searchShows: typeof searchShows,
+) => {
+  const {
+    state,
+    handlers: {setLoading, setError, setShows},
+  } = useAppState();
+  const {state: showsInput} = useFilterState();
+  const previousInput = usePrevious(showsInput);
   useEffect(() => {
     const fetchShows = async () => {
       setLoading(true);
-      const {url, shows} = await searchShows(showsInput);
-      setShows(shows);
-      setUrl(url);
+      if (isEmpty(showsInput.q)) {
+        const res = await _pageShows(showsInput);
+        if (showsInput.page === 1) {
+          res?.shows && setShows(res?.shows);
+        } else {
+          res?.shows && setShows([...(state?.shows ?? []), ...res?.shows]);
+        }
+      } else {
+        const res = await _searchShows(showsInput);
+        res?.shows && setShows(res?.shows);
+      }
       setLoading(false);
     };
-    fetchShows().catch(e => setError(e.message));
-  }, [showsInput]);
-  return {shows, loading, error};
+    if (showsInput && showsInput !== previousInput)
+      fetchShows().catch(e => setError(e.message ? e.message : e));
+  }, [
+    setError,
+    setLoading,
+    setShows,
+    state?.shows,
+    previousInput,
+    showsInput,
+    _pageShows,
+    _searchShows,
+  ]);
+  return {};
 };

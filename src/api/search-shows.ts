@@ -1,34 +1,36 @@
-import {ShowsInput, ShowsOutput} from '../models/shows.ts';
+import {Show, ShowsInput, ShowsOutput, ShowWithScore} from '../models/shows.ts';
+import {buildUrl} from './api-utils.ts';
 
-const TV_URL = 'https://api.tvmaze.com/search/';
+const TV_URL_SEARCH = 'https://api.tvmaze.com/search/shows';
+const TV_URL_SHOWS = 'https://api.tvmaze.com/shows';
 
-const _noWrap = ['page', 'q'];
-const _wrapWithShow = (v: string) => `Show[${v}]`;
-
-const _param = (key: string, value?: String | number) =>
-  value && Number(value) !== 0
-    ? `${_noWrap.includes(key) ? key : _wrapWithShow(key)}=${value}`
-    : '';
-export const buildParams = (params: ShowsInput) =>
-  encodeURI(
-    Object.keys(params).reduce(
-      (acc: string, k: string, index: number) =>
-        (index === 0 ? '?' : '') +
-        acc +
-        `${index > 0 && Number(params[k]) !== 0 ? '&' : ''}${_param(
-          k,
-          params[k],
-        )}`,
-      '',
-    ),
-  );
-
-export const buildUrl = (params: ShowsInput) =>
-  `${TV_URL}shows${buildParams(params)}`;
 export const searchShows = async (params: ShowsInput): Promise<ShowsOutput> => {
-  const url = buildUrl(params);
-  console.log('---------------', url);
-  const results = await fetch(url);
-  const jsonRes = await results.json();
-  return {url, shows: jsonRes};
+  const url = buildUrl(TV_URL_SEARCH, params);
+  try {
+    const results = await fetch(url);
+    const shows: ShowWithScore[] = await results.json();
+    return {url, shows: shows.map(s => s.show)};
+  } catch (error) {
+    return {
+      url,
+      shows: [],
+      error:
+        (error as unknown as {message: string})?.message || (error as string),
+    };
+  }
+};
+export const pageShows = async (params: ShowsInput): Promise<ShowsOutput> => {
+  const url = buildUrl(TV_URL_SHOWS, params);
+  try {
+    const results = await fetch(url);
+    const shows: Show[] = await results.json();
+    return {url, shows, error: undefined};
+  } catch (error) {
+    return {
+      url,
+      shows: [],
+      error:
+        (error as unknown as {message: string})?.message || (error as string),
+    };
+  }
 };

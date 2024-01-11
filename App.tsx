@@ -16,9 +16,11 @@ import {
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {Header, SearchScreen} from './src/components';
 import {Body} from './src/components/Body.tsx';
-import {Filter, FilterContainer} from './src/components/Filter.tsx';
+import {ErrorContainer} from './src/components/Error.tsx';
+import {SearchBarContainer} from './src/components/SearchBar.tsx';
+import {SeriesDetailsContainer} from './src/components/SeriesDetails.tsx';
 import {AppProvider} from './src/state/app-context.tsx';
-import {FilterContext, FilterProvider} from './src/state/filter-context.tsx';
+import {FilterProvider} from './src/state/filter-context.tsx';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -35,12 +37,15 @@ function App(): React.JSX.Element {
             barStyle={isDarkMode ? 'light-content' : 'dark-content'}
             backgroundColor={backgroundStyle.backgroundColor}
           />
-          <Header />
+          <Header>
+            <SearchBarContainer />
+          </Header>
+          <ErrorContainer />
           <Body>
             <SearchScreen />
           </Body>
-          <FilterContainer />
         </SafeAreaView>
+        <SeriesDetailsContainer />
       </FilterProvider>
     </AppProvider>
   );

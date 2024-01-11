@@ -1,36 +1,20 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faFilter} from '@fortawesome/free-solid-svg-icons/faFilter';
-import {useAppState} from '../state/app-context.tsx';
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 
-export const Header = () => (
+export const Header = ({children}: React.PropsWithChildren) => (
   <View style={styles.container}>
-    <View style={styles.headerRow}>
-      <Text style={styles.headerTitle}>Tv Series Search</Text>
-      <FilterButtonContainer />
-    </View>
+    <Text style={styles.headerTitle}>Tv Series Search</Text>
+    {children}
   </View>
 );
 
-const FilterButtonContainer = () => {
-  const {handlers} = useAppState();
-  return <FilterButton onShowFilter={handlers.showFilter} />;
-};
-const FilterButton = ({onShowFilter}: {onShowFilter: () => void}) => (
-  <TouchableOpacity style={styles.icon} onPress={onShowFilter}>
-    <FontAwesomeIcon icon={faFilter} />
-  </TouchableOpacity>
-);
 const styles = StyleSheet.create({
   container: {
-    height: 60,
+    height: 84,
     backgroundColor: 'lightgrey',
-    marginTop: 8,
-    paddingBottom: 8,
+    marginTop: 0,
+    paddingBottom: 0,
     paddingHorizontal: 24,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    flexDirection: 'row',
   },
   icon: {
     flex: 0.1,
@@ -43,6 +27,8 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 32,
     fontWeight: '600',
+    alignSelf: 'center',
+    marginBottom: 4,
   },
   headerRow: {
     flex: 1,

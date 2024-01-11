@@ -1,10 +1,3 @@
-import {
-  ShowGenreEnum,
-  ShowStatusEnum,
-  ShowTypeEnum,
-  SortEnum,
-} from './show-enums.ts';
-
 export interface ShowWithScore {
   score: number;
   show: Show;
@@ -73,19 +66,10 @@ export interface ShowsInput
   extends Record<string, undefined | string | number> {
   q?: string;
   page?: number;
-  showStatus_enum?: ShowStatusEnum;
-  showType_enum?: ShowTypeEnum;
-  genre?: ShowGenreEnum;
-  // language_enum: string;
-  // country_enum: string;
-  // network_id: string;
-  // webChannel_id: string;
-  // runtime: string;
-  // rating: string;
-  sort?: SortEnum;
 }
 
 export interface ShowsOutput {
-  shows: ShowWithScore[];
+  shows: Show[];
   url: string;
+  error?: string;
 }
