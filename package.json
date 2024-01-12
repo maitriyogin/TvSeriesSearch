@@ -7,10 +7,12 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "ios:15": "react-native run-ios --simulator=\\\"iPhone 15\\\" --mode Debug",
+    "ios:pods": "pod install --project-directory=ios",
+    "ios:all": "npm run ios:pods && npm run ios:15"
   },
   "dependencies": {
-    "@react-native-picker/picker": "^2.6.1",
     "react": "18.2.0",
     "react-native": "0.73.2",
     "react-native-render-html": "^6.3.4",

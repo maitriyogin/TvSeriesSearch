@@ -1,79 +1,114 @@
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# Getting Started
+# TV Series Search
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
-
-## Step 1: Start the Metro Server
-
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
-
-To start Metro, run the following command from the _root_ of your React Native project:
-
+# Quick Start
+## IOS
+assuming you have an "iPhone 15" simulator installed ...
 ```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
+npm run ios:all
 ```
 
-## Step 2: Start your Application
+## Android
+Assuming you have an android emulator installed
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+```bash
+npm run android 
+```
 
-### For Android
+# Getting Started
+
+Tv Series Search comes from the latest React Native project setup and hence requires the same setup as a normal React Native projcet.
+It has no extra native dependencies so you should be able to follow the standard build/install/instructions.
+
+> **Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+
+The notes basically make sure you have
+
+1. Android emulator ( android studio)
+2. Java 17
+3. Xcode
+4. Xcode command line tools
+5. Cocoa pods
+6. Xcode Simulators
+7. node > 18 must be installed or your current
+8. yarn or npm can be used to install and run
+
+## Whats in the app
+
+1. Search - You'll be presented with a search bar.
+   You can type a search term and click return or done on your respective device keyboards.
+
+2. Paging - if you clear the search bar, you'll go against the shows api and you'll be able to infinite scroll the list
+3. Likes - Press the like text and the show will be ammended to your like list and the like footer will turn pink!
+4. Details - Press a show image and you'll navigate to the details screen
+5. Error - If you get any network errors these will show up in the Error toast just below the search bar
+6. Connectivity - didn't get enough time to cover this
+7. Persisting - again didn't get enought time.
+
+## Step 1: Install node deps
+
+1. navigate to root of TvSeriesSearch
+2. open a terminal and run `npm install`
+
+## Step 2: Run Tests
+
+1. open a terminal and run `npm run test`
+
+## Step 3: Running the app
+
+## Android 
+Running on Android as long as you have java 17 and an emulator setup is sometimes easier so we'll start off with
 
 ```bash
 # using npm
 npm run android
-
-# OR using Yarn
-yarn android
 ```
 
-### For iOS
 
-```bash
-# using npm
-npm run ios
+The app should be copied to your Android emulator and startup, you'll also notice another terminal window for metro opening up.
 
-# OR using Yarn
-yarn ios
+## iOS
+First time build and run using iphone 15:
+
+```
+npm run ios:all
 ```
 
 If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+If you have another simulator then you can edit/add/ammend this line in package.json to match the name and version of your simulator.
+```
+    "ios:15": "react-native run-ios --simulator=\\\"iPhone 15\\\" --mode Debug",
+```
 
-## Step 3: Modifying your App
 
-Now that you have successfully run the app, let's modify it.
+If the app fails to build then opening TvSeriesSearchTests in xcode and then building from there should fix it.
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+Also if you run from xcode be sure to have the metro server running:
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+```bash
+# ussng npm
+npm start 
+```
 
-## Congratulations! :tada:
+Once the ios app is built you should just be able to have metro running in the background.
 
-You've successfully run and modified your React Native App. :partying_face:
+Alternatively you can try:
 
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+```bash
+# ussng npm
+npm run ios 
+```
 
 # Troubleshooting
 
 If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
 
-# Learn More
+# Contact
 
-To learn more about React Native, take a look at the following resources:
+Stephen White - stephen.white@mac.com
+0701415277
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+Please don't hesitate to call if your running into difficulties!
+````

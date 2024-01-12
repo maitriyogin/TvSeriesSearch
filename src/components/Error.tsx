@@ -33,6 +33,7 @@ export const Error = ({
 };
 const styles = StyleSheet.create({
   container: {
+    marginHorizontal: 24,
     padding: 8,
     borderRadius: 16,
     backgroundColor: 'orange',
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   headerText: {
-    alignSelf: 'flex-end',
+    alignSelf: 'center',
     fontSize: 20,
     fontWeight: '600',
   },

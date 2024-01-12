@@ -10,7 +10,7 @@ export const Header = ({children}: React.PropsWithChildren) => (
 
 const styles = StyleSheet.create({
   container: {
-    height: 84,
+    height: 92,
     backgroundColor: 'lightgrey',
     marginTop: 0,
     paddingBottom: 0,

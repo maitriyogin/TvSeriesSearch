@@ -11,11 +11,10 @@ const Comp = ({state, incPage}: {state?: ShowsInput; incPage?: boolean}) => {
   const pState = usePrevious(state);
   useEffect(() => {
     state && pState !== state && handlers.updateFilterState(state);
-  }, [handlers, state]);
+  }, [handlers, pState, state]);
   useEffect(() => {
     pIncPage !== incPage && handlers.incPage();
   }, [handlers, incPage, pIncPage]);
-  console.log('-------', filterState, incPage);
   return (
     <>
       <Text testID={'filterState'}>{JSON.stringify(filterState)}</Text>
