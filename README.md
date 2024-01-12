@@ -105,10 +105,4 @@ npm run ios
 
 If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
 
-# Contact
-
-Stephen White - stephen.white@mac.com
-0701415277
-
-Please don't hesitate to call if your running into difficulties!
 ````
